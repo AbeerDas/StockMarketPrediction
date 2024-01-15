@@ -197,7 +197,13 @@ else:
         st.pyplot(fig3)
         st.markdown("""<div style="text-align: center"><i>This one does the same but 33/66 split between training and testing, 2 layered LSTM model, 
                     1 dense layer, 3 epochs, 50 backcandles</i><br><br></div>""", unsafe_allow_html=True)
-        st.dataframe(data_table)
+        st.write(data_table.style.set_table_styles([{
+        'selector': 'table',
+        'props': [
+        ('text-align', 'center'),
+        ('margin', 'auto')
+         ]
+        }]))
 
 
 
@@ -357,10 +363,10 @@ Email: abeerdas647@gmail.com
 
 """, unsafe_allow_html=True)
 
-st.markdown("""
+st.markdown(f"""
 <h3>Additional Resources</h3>
-Another project: https://www.projectpro.io/article/stock-price-prediction-using-machine-learning-project/571
-<br>Highly reccomended playlist for beginners: https://www.youtube.com/watch?v=zxagGtF9MeU&list=PLblh5JKOoLUIxGDQs4LFFD--41Vzf-ME1&ab_channel=StatQuestwithJoshStarmer
+Another project I looked at : [Stock Price Prediction Using Machine Learning Project]({"https://www.projectpro.io/article/stock-price-prediction-using-machine-learning-project/571"})
+<br>Highly reccomended playlist for beginners: [StatQuest]({"https://www.youtube.com/watch?v=zxagGtF9MeU&list=PLblh5JKOoLUIxGDQs4LFFD--41Vzf-ME1&ab_channel=StatQuestwithJoshStarmer"})
 """, unsafe_allow_html=True)
 
 import os
