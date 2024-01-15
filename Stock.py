@@ -14,7 +14,7 @@ plt.style.use('https://github.com/dhaitz/matplotlib-stylesheets/raw/master/pitay
 import streamlit as st
 
 
-st.markdown(f"<h1>Bock Prediction using Long Short Term Model</h3>", unsafe_allow_html=True)
+st.markdown(f"<h1>Stock Prediction using Long Short Term Model</h3>", unsafe_allow_html=True)
 st.markdown(f"""<p><span style='color:#f7f5f5'><i>Dymanic program where an AI model predicts stock prices based on user-entered stock ticker, start date, and end date.
             I look into three different models that use different metrics and showcase how to make your model better.</i></p>""", unsafe_allow_html=True)
 
