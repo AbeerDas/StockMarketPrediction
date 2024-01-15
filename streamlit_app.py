@@ -14,7 +14,7 @@ plt.style.use('https://github.com/dhaitz/matplotlib-stylesheets/raw/master/pitay
 import streamlit as st
 
 st.markdown(f"<h1>Stock Prediction using Long Short Term Model</h3>", unsafe_allow_html=True)
-st.markdown(f"""<p><span style='color:#f7f5f5'><i>Dymanic program where an AI model predicts stock prices based on user-entered stock ticker, start date, and end date.
+st.markdown(f"""<p><span style='color:#939393'><i>Dymanic program where an AI model predicts stock prices based on user-entered stock ticker, start date, and end date.
             In examining three different models, I showcase the use of diverse metrics to demonstrate strategies for improving overall model performance..</i></p>""", unsafe_allow_html=True)
 
 
@@ -213,25 +213,25 @@ st.markdown(f"""
 These were a couple of technical indicators used to train the model. 
 I researched and retrieved them from the yfinance library. Here are some of the terms explained simply.
             
-*<h5><span style='color:#D1D1D1'>RSI (Relative Strength Index)</span></h5>*
+*<h5><span style='color:#808080'>RSI (Relative Strength Index)</span></h5>*
 The [Relative Strength Index (RSI)]({"https://www.fidelity.com/learning-center/trading-investing/technical-analysis/technical-indicator-guide/RSI#:~:text=Description,and%20oversold%20when%20below%2030."}) 
 acts like a stock speedometer, measuring how fast prices change. It helps spot overpriced (overbought) 
 or underpriced (oversold) stocks, indicating potential trend reversals. 
 High RSI suggests overpricing, low RSI suggests underpricing, helping identify moments when a stock's trend might change.
 
-*<h5><span style='color:#D1D1D1'>Exponential Moving Averages (EMAF, EMAM, EMAS)</span></h5>*
+*<h5><span style='color:##808080'>Exponential Moving Averages (EMAF, EMAM, EMAS)</span></h5>*
 EMAF, EMAM, and EMAS are types of moving averages that provide a smoother view of stock prices over time.
 EMAF gives more weight to recent prices, making it more responsive to short-term price changes.
 Similar to EMAF, EMAM smoothens out stock prices but with a longer period, providing a smoother average.
 EMAS uses an even longer period for a more extended-term trend indication.
 
-*<h5><span style='color:#D1D1D1'>Target Calculation</span></h5>*
+*<h5><span style='color:##808080'>Target Calculation</span></h5>*
 The target is a simple math problem: subtract the opening price of a stock from its adjusted closing price. 
 This gives us a number that tells us how much the stock's value changed in a day. It's like 
 figuring out if I made or lost money on a stock during the day.
 
 
-*<h5><span style='color:#D1D1D1'>TargetClass</span></h5>*
+*<h5><span style='color:##808080'>TargetClass</span></h5>*
 TargetClass is a bit like a traffic light for stocks. It says, "<span style='color:#ABEBC6'>Green</span>" if the stock is likely to go up, and "<span style='color:#E74C3C'>Red</span>" if it's likely to go down. It's a simple way of predicting the future movement of a stock based on its recent behavior. This can be handy for making decisions about whether to buy or sell a stock. In technical terms, it is a binary classification label indicating whether 
 the target price change is positive or negative.
 """, unsafe_allow_html=True)
@@ -239,14 +239,14 @@ the target price change is positive or negative.
 # Training Model
 st.markdown(f"<h3>How I Trained the <span style='color:#FD00BD'>Model</h3>", unsafe_allow_html=True)
 st.markdown(f"""
-*<h5><span style='color:#D1D1D1'>Data Gathering and Preparation</span></h5>*
+*<h5><span style='color:##808080'>Data Gathering and Preparation</span></h5>*
 I began by collecting historical stock data using the yfinance library for a specific stock, 
 such as Apple (AAPL). This data included various features, such as opening and closing prices, 
 volume, and other technical indicators like Relative Strength Index (RSI) and 
 Exponential Moving Averages (EMAF, EMAM, EMAS). This particular model looked into 50 backcandles.
 This means we took data from the last 50 days to predict the next day's return. 
 
-*<h5><span style='color:#D1D1D1'>Data Scaling</span></h5>*
+*<h5><span style='color:##808080'>Data Scaling</span></h5>*
 To ensure consistency and improve model performance, I applied [Min-Max Scaling]({"https://www.analyticsvidhya.com/blog/2020/04/feature-scaling-machine-learning-normalization-standardization/"}) 
 to normalize the input features within a specific range (0 to 1).
 """, unsafe_allow_html=True)
@@ -260,7 +260,7 @@ lstm_web = "https://www.analyticsvidhya.com/blog/2021/03/introduction-to-long-sh
 
 st.markdown(f"""
 
-*<h5><span style='color:#D1D1D1'>LSTM Model Architecture</span></h5>*
+*<h5><span style='color:##808080'>LSTM Model Architecture</span></h5>*
 I chose to use a type of artificial neural network called Long Short-Term Memory (LSTM). LSTMs are particularly effective for sequence prediction tasks, making them suitable for time-series data like stock prices.
 The model architecture consisted of an LSTM layer with 150 units, followed by a dense layer with one unit. 
 The activation function used was linear, which is commonly employed for regression tasks.
@@ -279,7 +279,7 @@ st.markdown(f"""<div style="text-align: center"><i>An LSTM (Long Short-Term Memo
             thoughtful gatekeeper that helps the model remember important things, learn new stuff, and share the right information at the right time.
             </i></div>
 
-*<h5><span style='color:#D1D1D1'>Model Compilation and Training</span></h5>*
+*<h5><span style='color:##808080'>Model Compilation and Training</span></h5>*
 Before training the model, I compiled it using the [Adam optimizer]({web1}) 
 and Mean Squared Error (MSE) loss function. Adam is an optimization algorithm commonly used in training neural networks. 
 MSE is a measure of the average squared difference between predicted and actual values, making it suitable for regression problems.
@@ -295,7 +295,7 @@ st.markdown(markdown_content3, unsafe_allow_html=True)
 
 st.markdown("""<div style="text-align: center"><i>Data set was split: 30% Testing, 70% Training, and 10% Validation within the Training</i></div>
         
-*<h5><span style='color:#D1D1D1'>Model Evaluation</span></h5>*
+*<h5><span style='color:##808080'>Model Evaluation</span></h5>*
 After training, I loaded my pre-trained model and used it to make predictions on the test set (X_test). 
 I compared the predicted values (y_pred) with the actual values (y_test) to evaluate the model's accuracy.
 """,unsafe_allow_html=True)
@@ -336,7 +336,7 @@ RMSE: Smaller is better. It's another way to measure prediction accuracy, giving
 st.markdown(f"""
 <h3>Pitfalls and <span style='color:#64DCFF'>Things to Look out for</span></h3>
 The stock market is incredible volatile and a ton of factors go into predicting the prices of a singular share. If there was a perfectly mathematically sound way
-of predicting the stock prices everytime, we would have a lot more billionaires. A better AI would do [sentimenet analysis]({"https://www.damcogroup.com/blogs/ai-in-stock-market-predicting-the-unpredictable-with-confidence"}) 
+of predicting the stock prices everytime, we would have a lot more billionaires. A better AI would do [sentimenet analysis](https://www.damcogroup.com/blogs/ai-in-stock-market-predicting-the-unpredictable-with-confidence) 
 and  analyze news articles, companies’ financial reports, and social media conversations in real-time. 
 That being said, you can still make a lot of positive returns from Stock predictors that are
 purely based on technical indicators as it removes human bias.<br>""", unsafe_allow_html=True)
@@ -365,8 +365,8 @@ Email: abeerdas647@gmail.com
 
 st.markdown(f"""
 <h3>Additional Resources</h3>
-Another project I looked at : [Stock Price Prediction Using Machine Learning Project]("https://www.projectpro.io/article/stock-price-prediction-using-machine-learning-project/571")
-<br>Highly reccomended playlist for beginners: [StatQuest]("https://www.youtube.com/watch?v=zxagGtF9MeU&list=PLblh5JKOoLUIxGDQs4LFFD--41Vzf-ME1&ab_channel=StatQuestwithJoshStarmer")
+Another project I looked at : [Stock Price Prediction Using Machine Learning Project](https://www.projectpro.io/article/stock-price-prediction-using-machine-learning-project/571)
+<br>Highly reccomended playlist for beginners: [StatQuest](https://www.youtube.com/watch?v=zxagGtF9MeU&list=PLblh5JKOoLUIxGDQs4LFFD--41Vzf-ME1&ab_channel=StatQuestwithJoshStarmer)
 """, unsafe_allow_html=True)
 
 import os
