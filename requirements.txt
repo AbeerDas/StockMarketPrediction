@@ -1,4 +1,4 @@
-numpy==1.21.3
+numpy==1.21.0
 pandas==1.2.5
 yfinance==0.1.63
 pandas_ta==0.3.14b0
