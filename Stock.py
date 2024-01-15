@@ -13,10 +13,9 @@ plt.style.use('https://github.com/dhaitz/matplotlib-stylesheets/raw/master/pitay
 
 import streamlit as st
 
-
 st.markdown(f"<h1>Stock Prediction using Long Short Term Model</h3>", unsafe_allow_html=True)
 st.markdown(f"""<p><span style='color:#f7f5f5'><i>Dymanic program where an AI model predicts stock prices based on user-entered stock ticker, start date, and end date.
-            I look into three different models that use different metrics and showcase how to make your model better.</i></p>""", unsafe_allow_html=True)
+            In examining three different models, I showcase the use of diverse metrics to demonstrate strategies for improving overall model performance..</i></p>""", unsafe_allow_html=True)
 
 
 profile = "https://media.licdn.com/dms/image/D5603AQHq-wKhXwCIOQ/profile-displayphoto-shrink_400_400/0/1689913637650?e=2147483647&v=beta&t=7Y2IMpEPoOXO6_Js8DnoetBAs2m64G4Sm3NpTyXlwy8"
@@ -359,7 +358,7 @@ Email: abeerdas647@gmail.com
 """, unsafe_allow_html=True)
 
 st.markdown("""
-*<h3>Additional Resources</h3>*
+<h3>Additional Resources</h3>
 Another project: https://www.projectpro.io/article/stock-price-prediction-using-machine-learning-project/571
 <br>Highly reccomended playlist for beginners: https://www.youtube.com/watch?v=zxagGtF9MeU&list=PLblh5JKOoLUIxGDQs4LFFD--41Vzf-ME1&ab_channel=StatQuestwithJoshStarmer
 """, unsafe_allow_html=True)
