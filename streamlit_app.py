@@ -205,37 +205,6 @@ else:
          ]
         }]))
 
-
-
-# Financial Terms
-st.markdown(f"<h3>Financial Terms Explained</h3>", unsafe_allow_html=True)
-st.markdown(f"""
-These were a couple of technical indicators used to train the model. 
-I researched and retrieved them from the yfinance library. Here are some of the terms explained simply.
-            
-*<h5><span style='color:#808080'>RSI (Relative Strength Index)</span></h5>*
-The [Relative Strength Index (RSI)]({"https://www.fidelity.com/learning-center/trading-investing/technical-analysis/technical-indicator-guide/RSI#:~:text=Description,and%20oversold%20when%20below%2030."}) 
-acts like a stock speedometer, measuring how fast prices change. It helps spot overpriced (overbought) 
-or underpriced (oversold) stocks, indicating potential trend reversals. 
-High RSI suggests overpricing, low RSI suggests underpricing, helping identify moments when a stock's trend might change.
-
-*<h5><span style='color:##808080'>Exponential Moving Averages (EMAF, EMAM, EMAS)</span></h5>*
-EMAF, EMAM, and EMAS are types of moving averages that provide a smoother view of stock prices over time.
-EMAF gives more weight to recent prices, making it more responsive to short-term price changes.
-Similar to EMAF, EMAM smoothens out stock prices but with a longer period, providing a smoother average.
-EMAS uses an even longer period for a more extended-term trend indication.
-
-*<h5><span style='color:##808080'>Target Calculation</span></h5>*
-The target is a simple math problem: subtract the opening price of a stock from its adjusted closing price. 
-This gives us a number that tells us how much the stock's value changed in a day. It's like 
-figuring out if I made or lost money on a stock during the day.
-
-
-*<h5><span style='color:##808080'>TargetClass</span></h5>*
-TargetClass is a bit like a traffic light for stocks. It says, "<span style='color:#ABEBC6'>Green</span>" if the stock is likely to go up, and "<span style='color:#E74C3C'>Red</span>" if it's likely to go down. It's a simple way of predicting the future movement of a stock based on its recent behavior. This can be handy for making decisions about whether to buy or sell a stock. In technical terms, it is a binary classification label indicating whether 
-the target price change is positive or negative.
-""", unsafe_allow_html=True)
-
 # Training Model
 st.markdown(f"<h3>How I Trained the <span style='color:#FD00BD'>Model</h3>", unsafe_allow_html=True)
 st.markdown(f"""
@@ -333,6 +302,37 @@ RMSE: Smaller is better. It's another way to measure prediction accuracy, giving
 """)
 
 
+# Financial Terms
+st.markdown(f"<h3>Financial Terms Explained</h3>", unsafe_allow_html=True)
+st.markdown(f"""
+These were a couple of technical indicators used to train the model. 
+I researched and retrieved them from the yfinance library. Here are some of the terms explained simply.
+            
+*<h5><span style='color:#808080'>RSI (Relative Strength Index)</span></h5>*
+The [Relative Strength Index (RSI)]({"https://www.fidelity.com/learning-center/trading-investing/technical-analysis/technical-indicator-guide/RSI#:~:text=Description,and%20oversold%20when%20below%2030."}) 
+acts like a stock speedometer, measuring how fast prices change. It helps spot overpriced (overbought) 
+or underpriced (oversold) stocks, indicating potential trend reversals. 
+High RSI suggests overpricing, low RSI suggests underpricing, helping identify moments when a stock's trend might change.
+
+*<h5><span style='color:##808080'>Exponential Moving Averages (EMAF, EMAM, EMAS)</span></h5>*
+EMAF, EMAM, and EMAS are types of moving averages that provide a smoother view of stock prices over time.
+EMAF gives more weight to recent prices, making it more responsive to short-term price changes.
+Similar to EMAF, EMAM smoothens out stock prices but with a longer period, providing a smoother average.
+EMAS uses an even longer period for a more extended-term trend indication.
+
+*<h5><span style='color:##808080'>Target Calculation</span></h5>*
+The target is a simple math problem: subtract the opening price of a stock from its adjusted closing price. 
+This gives us a number that tells us how much the stock's value changed in a day. It's like 
+figuring out if I made or lost money on a stock during the day.
+
+
+*<h5><span style='color:##808080'>TargetClass</span></h5>*
+TargetClass is a bit like a traffic light for stocks. It says, "<span style='color:#ABEBC6'>Green</span>" if the stock is likely to go up, and "<span style='color:#E74C3C'>Red</span>" if it's likely to go down. It's a simple way of predicting the future movement of a stock based on its recent behavior. This can be handy for making decisions about whether to buy or sell a stock. In technical terms, it is a binary classification label indicating whether 
+the target price change is positive or negative.
+""", unsafe_allow_html=True)
+
+
+
 st.markdown(f"""
 <h3>Pitfalls and <span style='color:#64DCFF'>Things to Look out for</span></h3>
 The stock market is incredible volatile and a ton of factors go into predicting the prices of a singular share. If there was a perfectly mathematically sound way
@@ -355,9 +355,10 @@ as that would not fit the data requirements needed to make a prediction. I could
 is not a requirement. Given a better graphics card, I could also probably train a model with a larger amount of data as well as more epochs. I could also play around and try different 
 amounts of layers, technical indicators, backcandles, etc. 
             
-I had a lot of fun making this and learnt a lot more than I would if I just read and watched things around this topic as opposed to making something. 
-I will list below a bunch of videos and websites I watched to make this possible. Also, email me know
-if you see any ways this could be improved and I would love to integrate feedback! <br>
+I had a blast putting this together and learned a ton. Instead of just reading and watching stuff, 
+I actually made something. Below, I'll share the videos and websites 
+hat helped me. If you spot any ways to make it better, shoot me an email. I'd love to hear your thoughts! Also, email me know
+if you see any ways this could be improved as I would love to integrate feedback! <br>
             
 Email: abeerdas647@gmail.com
 
