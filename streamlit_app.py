@@ -117,7 +117,7 @@ else:
         # Display the plot in Streamlit
         st.pyplot(fig)
         st.markdown("""<div style="text-align: center"><i>70/30 split between training and testing, 200 layered lstm model, 1 dense layer, 60 epochs, 
-                    50 backcandles</i><br></div>""", unsafe_allow_html=True)
+                    50 backcandles</i><br><br></div>""", unsafe_allow_html=True)
         
         st.markdown(f"<h3><span style='color:#64DCFF'></span>All<span style='color:#FD00BD'> technical </span>indicators measured ↴</h3>",
                     unsafe_allow_html=True)
