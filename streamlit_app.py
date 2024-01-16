@@ -15,7 +15,7 @@ import streamlit as st
 
 st.markdown(f"<h1>Stock Prediction using Long Short Term Model</h3>", unsafe_allow_html=True)
 st.markdown(f"""<p><span style='color:#939393'><i>Dymanic program where an AI model predicts stock prices based on user-entered stock ticker, start date, and end date.
-            In examining three different models, I showcase the use of diverse metrics to demonstrate strategies for improving overall model performance..</i></p>""", unsafe_allow_html=True)
+            In examining three different models, I showcase the use of diverse metrics to demonstrate strategies for improving overall model performance.</i></p>""", unsafe_allow_html=True)
 
 
 profile = "https://media.licdn.com/dms/image/D5603AQHq-wKhXwCIOQ/profile-displayphoto-shrink_400_400/0/1689913637650?e=2147483647&v=beta&t=7Y2IMpEPoOXO6_Js8DnoetBAs2m64G4Sm3NpTyXlwy8"
@@ -28,9 +28,9 @@ profile_markdown = f'<div style="display: flex; justify-content: center; border-
 
 userinput = st.text_input('Enter Stock Ticker', 'AAPL', help="You can enter your own stock ticker")
 
-startinput = st.date_input('Start Date', pd.to_datetime('2021-01-14'), help="Enter your own start date")
+startinput = st.date_input('Enter Start Date', pd.to_datetime('2021-01-14'), help="Enter your own start date")
 
-endinput = st.date_input('End Date', pd.to_datetime('2021-12-31'), help="Enter an end date")
+endinput = st.date_input('Enter End Date', pd.to_datetime('2021-12-31'), help="Enter an end date")
 
 
 
@@ -116,88 +116,79 @@ else:
 
         # Display the plot in Streamlit
         st.pyplot(fig)
-        st.markdown("""<div style="text-align: center"><i>70/30 split between training and testing, 150 layered lstm model, 1 dense layer, 30 epochs, 
+        st.markdown("""<div style="text-align: center"><i>70/30 split between training and testing, 200 layered lstm model, 1 dense layer, 60 epochs, 
                     50 backcandles</i><br></div>""", unsafe_allow_html=True)
         
-        data2 = yf.download(userinput, start = startinput, end = endinput)
-
-
-        data2['Target'] = data2['Adj Close']-data2.Open
-        data2['Target'] = data2['Target'].shift(-1)
-
-        data2['TargetClass'] = [1 if data2.Target[i]>0 else 0 for i in range(len(data2))]
-
-        data2['TargetNextClose'] = data2['Adj Close'].shift(-1)
-        data_table = data2
-        data2.dropna(inplace=True)
-        data2.reset_index(inplace = True)
-        data2.drop(['Close', 'Date'], axis=1, inplace=True)
-        data_set2 = data2.iloc[:, 0:11]
-
-        sc = MinMaxScaler(feature_range=(0,1))
-        data_set_scaled2 = sc.fit_transform(data_set2)
-
-        X2 = []
+        st.markdown(f"<h3><span style='color:#64DCFF'></span>All<span style='color:#FD00BD'> technical </span>indicators measured ↴</h3>",
+                    unsafe_allow_html=True)
         
-        if data_set_scaled2.shape[0] >= backcandles:
-            for j in range(8):
-                X2.append([])
-                for i in range(backcandles, data_set_scaled2.shape[0]):#backcandles+2
-                    X2[j].append(data_set_scaled2[i-backcandles:i, j])
+        def process_and_plot_stock_data(data, model, title_font, axis_label_font):
+            data['Target'] = data['Adj Close'] - data.Open
+            data['Target'] = data['Target'].shift(-1)
 
-            #move axis from 0 to position 2
-            X2=np.moveaxis(X2, [0], [2])
+            data['TargetClass'] = [1 if data.Target[i] > 0 else 0 for i in range(len(data))]
 
-            X2, yi2 =np.array(X2), np.array(data_set_scaled2[backcandles:,-1])
-            y2 = np.reshape(yi2, (len(yi2), 1))
+            data['TargetNextClose'] = data['Adj Close'].shift(-1)
+            data.dropna(inplace=True)
+            data.reset_index(inplace=True)
+            data.drop(['Close', 'Date'], axis=1, inplace=True)
+            data_set = data.iloc[:, 0:11]
 
-       
-        X_test2 = X2
-        y_test2 = y2
+            sc = MinMaxScaler(feature_range=(0, 1))
+            data_set_scaled = sc.fit_transform(data_set)
 
-        # Ensure X_test2 and y_test2 have the same length
-        X_test2 = X_test2[:len(y_test2)]
+            X = []
 
-        loaded_modelv2 = load_model('StockAI.h5')
-        y_pred2 = loaded_modelv2.predict(X_test2)
-   
-        st.markdown(f"<h3><span style='color:#64DCFF'></span>All<span style='color:#FD00BD'> technical </span>indicators measured ↴</h3>", unsafe_allow_html=True)
- 
-        fig2, ax2 = plt.subplots(figsize=(16, 6))
-        ax2.plot(y_test2, label='Test')
-        ax2.plot(y_pred2, label='AI Prediction')
+            if data_set_scaled.shape[0] >= backcandles:
+                for j in range(8):
+                    X.append([])
+                    for i in range(backcandles, data_set_scaled.shape[0]):
+                        X[j].append(data_set_scaled[i - backcandles:i, j])
 
-        ax2.legend()
+                X = np.moveaxis(X, [0], [2])
 
-        ax2.set_title('Actual vs Predicted Values', fontdict=title_font)
-        ax2.set_xlabel('Days Passed', fontdict=axis_label_font)
-        ax2.set_ylabel('Value', fontdict=axis_label_font)
+                X, yi = np.array(X), np.array(data_set_scaled[backcandles:, -1])
+                y = np.reshape(yi, (len(yi), 1))
 
-        # Display the plot in Streamlit
-        st.pyplot(fig2)
-        st.markdown("""<div style="text-align: center"><i>70/30 split between training and testing, 150 layered LSTM model, 1 dense layer, 30 epochs, 50 backcandles. 
-        This time it uses a model that takes all tehnical indicators into account and just gives us a min/maxed scale value</i><br><br></div>""", unsafe_allow_html=True)
+            X_test = X
+            y_test = y
+            X_test = X_test[:len(y_test)]
+
+            loaded_model = load_model(model)
+            y_pred = loaded_model.predict(X_test)
+
+            # Plotting
+            
+            fig, ax = plt.subplots(figsize=(16, 6))
+            ax.plot(y_test, label='Test')
+            ax.plot(y_pred, label='AI Prediction')
+            ax.legend()
+            ax.set_title('Actual vs Predicted Values', fontdict=title_font)
+            ax.set_xlabel('Days Passed', fontdict=axis_label_font)
+            ax.set_ylabel('Value', fontdict=axis_label_font)
+
+            st.pyplot(fig)
+            return y_test, y_pred
 
 
-        #Actual Worse Model
-        loaded_modelv2 = load_model('StockAIv2.h5')
-        y_pred3 = loaded_modelv2.predict(X_test2)
-   
-        fig3, ax3 = plt.subplots(figsize=(16, 6))
-        ax3.plot(y_test2, label='Test')
-        ax3.plot(y_pred3, label='AI Prediction')
+        # Assuming backcandles is defined elsewhere in your code
 
-        ax3.legend()
+        # Process and plot data2
+        data2 = yf.download(userinput, start=startinput, end=endinput)
+        y_test2, y_pred2 = process_and_plot_stock_data(data2, 'StockAI.h5', title_font, axis_label_font)
+        st.markdown("""<div style="text-align: center"><i>70/30 split between training and testing, 150 layered LSTM model,
+                    1 dense layer, 30 epochs, 50 backcandles.
+                    This time it uses a model that takes all technical indicators into account and just gives us a min/maxed
+                    scale value</i><br><br></div>""", unsafe_allow_html=True)
 
-        ax3.set_title('Actual vs Predicted Values', fontdict=title_font)
-        ax3.set_xlabel('Days Passed', fontdict=axis_label_font)
-        ax3.set_ylabel('Value', fontdict=axis_label_font)
+        # Process and plot data3
+        data3 = yf.download(userinput, start=startinput, end=endinput)
+        y_invalid, y_pred3 = process_and_plot_stock_data(data3, 'StockAIv2.h5', title_font, axis_label_font)
 
-        # Display the plot in Streamlit
-        st.pyplot(fig3)
         st.markdown("""<div style="text-align: center"><i>This one does the same but 33/66 split between training and testing, 2 layered LSTM model, 
                     1 dense layer, 3 epochs, 50 backcandles</i><br><br></div>""", unsafe_allow_html=True)
-        st.write(data_table.style.set_table_styles([{
+
+        st.write(data2.style.set_table_styles([{
         'selector': 'table',
         'props': [
         ('text-align', 'center'),
@@ -206,16 +197,16 @@ else:
         }]))
 
 # Training Model
-st.markdown(f"<h3>How I Trained the <span style='color:#FD00BD'>Model</h3>", unsafe_allow_html=True)
+st.markdown(f"<h3>How I Trained the <span style='color:#FD00BD'>Models</h3>", unsafe_allow_html=True)
 st.markdown(f"""
-*<h5><span style='color:##808080'>Data Gathering and Preparation</span></h5>*
+*<h5><span style='color:#808080'>Data Gathering and Preparation</span></h5>*
 I began by collecting historical stock data using the yfinance library for a specific stock, 
 such as Apple (AAPL). This data included various features, such as opening and closing prices, 
 volume, and other technical indicators like Relative Strength Index (RSI) and 
 Exponential Moving Averages (EMAF, EMAM, EMAS). This particular model looked into 50 backcandles.
 This means we took data from the last 50 days to predict the next day's return. 
 
-*<h5><span style='color:##808080'>Data Scaling</span></h5>*
+*<h5><span style='color:#808080'>Data Scaling</span></h5>*
 To ensure consistency and improve model performance, I applied [Min-Max Scaling]({"https://www.analyticsvidhya.com/blog/2020/04/feature-scaling-machine-learning-normalization-standardization/"}) 
 to normalize the input features within a specific range (0 to 1).
 """, unsafe_allow_html=True)
@@ -229,7 +220,7 @@ lstm_web = "https://www.analyticsvidhya.com/blog/2021/03/introduction-to-long-sh
 
 st.markdown(f"""
 
-*<h5><span style='color:##808080'>LSTM Model Architecture</span></h5>*
+*<h5><span style='color:#808080'>LSTM Model Architecture</span></h5>*
 I chose to use a type of artificial neural network called Long Short-Term Memory (LSTM). LSTMs are particularly effective for sequence prediction tasks, making them suitable for time-series data like stock prices.
 The model architecture consisted of an LSTM layer with 150 units, followed by a dense layer with one unit. 
 The activation function used was linear, which is commonly employed for regression tasks.
@@ -248,7 +239,7 @@ st.markdown(f"""<div style="text-align: center"><i>An LSTM (Long Short-Term Memo
             thoughtful gatekeeper that helps the model remember important things, learn new stuff, and share the right information at the right time.
             </i></div>
 
-*<h5><span style='color:##808080'>Model Compilation and Training</span></h5>*
+*<h5><span style='color:#808080'>Model Compilation and Training</span></h5>*
 Before training the model, I compiled it using the [Adam optimizer]({web1}) 
 and Mean Squared Error (MSE) loss function. Adam is an optimization algorithm commonly used in training neural networks. 
 MSE is a measure of the average squared difference between predicted and actual values, making it suitable for regression problems.
@@ -264,9 +255,9 @@ st.markdown(markdown_content3, unsafe_allow_html=True)
 
 st.markdown("""<div style="text-align: center"><i>Data set was split: 30% Testing, 70% Training, and 10% Validation within the Training</i></div>
         
-*<h5><span style='color:##808080'>Model Evaluation</span></h5>*
-After training, I loaded my pre-trained model and used it to make predictions on the test set (X_test). 
-I compared the predicted values (y_pred) with the actual values (y_test) to evaluate the model's accuracy.
+*<h5><span style='color:#808080'>Model Evaluation</span></h5>*
+After training, I loaded my pre-trained model and used it to make predictions on the test set. 
+I compared the predicted values with the actual values to evaluate the model's accuracy.
 """,unsafe_allow_html=True)
 
 def error_calculate(y_t, y_p):
@@ -314,32 +305,35 @@ acts like a stock speedometer, measuring how fast prices change. It helps spot o
 or underpriced (oversold) stocks, indicating potential trend reversals. 
 High RSI suggests overpricing, low RSI suggests underpricing, helping identify moments when a stock's trend might change.
 
-*<h5><span style='color:##808080'>Exponential Moving Averages (EMAF, EMAM, EMAS)</span></h5>*
+*<h5><span style='color:#808080'>Exponential Moving Averages (EMAF, EMAM, EMAS)</span></h5>*
 EMAF, EMAM, and EMAS are types of moving averages that provide a smoother view of stock prices over time.
 EMAF gives more weight to recent prices, making it more responsive to short-term price changes.
 Similar to EMAF, EMAM smoothens out stock prices but with a longer period, providing a smoother average.
 EMAS uses an even longer period for a more extended-term trend indication.
 
-*<h5><span style='color:##808080'>Target Calculation</span></h5>*
+*<h5><span style='color:#808080'>Target Calculation</span></h5>*
 The target is a simple math problem: subtract the opening price of a stock from its adjusted closing price. 
 This gives us a number that tells us how much the stock's value changed in a day. It's like 
 figuring out if I made or lost money on a stock during the day.
 
 
-*<h5><span style='color:##808080'>TargetClass</span></h5>*
-TargetClass is a bit like a traffic light for stocks. It says, "<span style='color:#ABEBC6'>Green</span>" if the stock is likely to go up, and "<span style='color:#E74C3C'>Red</span>" if it's likely to go down. It's a simple way of predicting the future movement of a stock based on its recent behavior. This can be handy for making decisions about whether to buy or sell a stock. In technical terms, it is a binary classification label indicating whether 
+*<h5><span style='color:#808080'>TargetClass</span></h5>*
+TargetClass is a bit like a traffic light for stocks. It says, "<span style='color:#ABEBC6'>Green</span>" if 
+the stock is likely to go up, and "<span style='color:#E74C3C'>Red</span>" if it's likely to go down. It's a simple way of 
+predicting the future movement of a stock based on its recent behavior. This can be handy for making decisions about whether to buy or 
+sell a stock. In technical terms, it is a binary classification label indicating whether 
 the target price change is positive or negative.
 """, unsafe_allow_html=True)
 
 
-
 st.markdown(f"""
 <h3>Pitfalls and <span style='color:#64DCFF'>Things to Look out for</span></h3>
-The stock market is incredible volatile and a ton of factors go into predicting the prices of a singular share. If there was a perfectly mathematically sound way
-of predicting the stock prices everytime, we would have a lot more billionaires. A better AI would do [sentimenet analysis](https://www.damcogroup.com/blogs/ai-in-stock-market-predicting-the-unpredictable-with-confidence) 
-and  analyze news articles, companies’ financial reports, and social media conversations in real-time. 
+The stock market is incredibly volatile, and a ton of factors go into predicting the prices of a singular share. If there was a perfectly mathematically sound way
+of predicting the stock prices every time, we would have a lot more billionaires. A better AI would do sentimental analysis 
+and analyze news articles, companies’ financial reports, and social media conversations in real-time. 
 That being said, you can still make a lot of positive returns from Stock predictors that are
 purely based on technical indicators as it removes human bias.<br>""", unsafe_allow_html=True)
+
 
 image_url4 ="https://miro.medium.com/v2/resize:fit:885/1*qfAQAcUQDjNnZpySY9QV8A.png"
 markdown_content4 = f'''<div style="display: flex; justify-content: center; border-radius: 20px;"><img src="{image_url4}" alt="Image" width="400"/></div>'''
@@ -355,6 +349,8 @@ as that would not fit the data requirements needed to make a prediction. I could
 is not a requirement. Given a better graphics card, I could also probably train a model with a larger amount of data as well as more epochs. I could also play around and try different 
 amounts of layers, technical indicators, backcandles, etc. 
             
+Through demonstrating three different models that all vary in accuracy, I learned was the importance of a properly built model for good performance.
+            
 I had a blast putting this together and learned a ton. Instead of just reading and watching stuff, 
 I actually made something. Below, I'll share the videos and websites 
 hat helped me. If you spot any ways to make it better, shoot me an email. I'd love to hear your thoughts! Also, email me know
@@ -366,8 +362,9 @@ Email: abeerdas647@gmail.com
 
 st.markdown(f"""
 <h3>Additional Resources</h3>
-Another project I looked at : [Stock Price Prediction Using Machine Learning Project](https://www.projectpro.io/article/stock-price-prediction-using-machine-learning-project/571)
-<br>Highly reccomended playlist for beginners: [StatQuest](https://www.youtube.com/watch?v=zxagGtF9MeU&list=PLblh5JKOoLUIxGDQs4LFFD--41Vzf-ME1&ab_channel=StatQuestwithJoshStarmer)
+Another project I looked at - Stock Price Prediction Using Machine Learning Project: https://www.projectpro.io/article/stock-price-prediction-using-machine-learning-project/571
+<br>Highly reccomended playlist for beginners - StatQuest: https://www.youtube.com/watch?v=zxagGtF9MeU&list=PLblh5JKOoLUIxGDQs4LFFD--41Vzf-ME1&ab_channel=StatQuestwithJoshStarmer
+<br>Sentimental Analysis: https://www.damcogroup.com/blogs/ai-in-stock-market-predicting-the-unpredictable-with-confidence
 """, unsafe_allow_html=True)
 
 import os
