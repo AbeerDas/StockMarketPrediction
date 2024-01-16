@@ -2,7 +2,7 @@
 Dymanic program where an AI model predicts stock prices based on user-entered stock ticker, start date, and end date.
 
 <p align="center">
-  <img src="website_preview.png" alt="Screenshot of Movie App" style="display: block; margin: 0; width: 600px; ">
+  <img src="website_preview.png" alt="Screenshot of Movie App" style="display: block; margin: 0; width: 1600px; ">
 </p>
 
 ## Viewing Code and Files
