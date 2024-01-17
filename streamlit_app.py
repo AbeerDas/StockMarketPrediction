@@ -353,8 +353,7 @@ Through demonstrating three different models that all vary in accuracy, I learne
             
 I had a blast putting this together and learned a ton. Instead of just reading and watching stuff, 
 I actually made something. Below, I'll share the videos and websites 
-hat helped me. If you spot any ways to make it better, shoot me an email. I'd love to hear your thoughts! Also, email me know
-if you see any ways this could be improved as I would love to integrate feedback! <br>
+hat helped me. If you spot any ways to make it better, email me as I would love to integrate feedback! <br>
             
 Email: abeerdas647@gmail.com
 
